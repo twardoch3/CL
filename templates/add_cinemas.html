@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+{% block content %}
+<a href="{{url_for('index')}}">Main Site</a><br>
+{% if error %}
+<h3>{{error}}</h3>
+{% endif %}
+<div>
+    <h3>Add New Cinema</h3>
+    <form method="post" action="#">
+        <label>Name
+        <input name="name" type="text" maxlength="100"/>
+        </label>
+        <label>Address
+        <input name="address" type="text" maxlength="255"/>
+        </label>
+        <label>Capacity
+        <input name="capacity" type="number"/>
+        </label>
+        <button type="submit" name="submit" value="cinemas">Add</button>
+    </form>
+</div>
+
+{% endblock %}

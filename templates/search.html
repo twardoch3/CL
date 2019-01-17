@@ -1,0 +1,93 @@
+{% extends "index.html" %}
+{% block content %}
+<a href="{{url_for('index')}}">Main Site</a>
+<a href="{{url_for('modify',tabela='tickets')}}">  Tickets</a>
+<a href="{{url_for('modify',tabela='payments')}}">  Payments</a><br>
+<a href="{{url_for('pm_details')}}"><h3>Tickets with Payments</h3></a>
+<form action="#" method="get">
+
+    <label>Choose Payment Type:
+        <label><input type="radio" name="type" value="cash"> Cash</label>
+        <label><input type="radio" name="type" value="card"> Card</label>
+        <label><input type="radio" name="type" value="transfer"> Transfer</label>
+        <label><button type="submit" name="submit">Submit</button></label>
+    </label>
+</form>
+
+<form action="#" method="get">
+    <label>Show Tickets by Show:
+        <label>
+            <select name="show1">
+                {% for s in shows %}
+                <option value="{{s['id']}}">Id:{{s['id']}}- Movie:{{s['m_name']}}- Cinema:{{s['c_name']}}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>
+            <button type="submit" name="submit" value="shows">Submit</button>
+        </label>
+    </label>
+</form>
+
+
+
+<h3>{{tt}}</h3>
+<table border=1>
+    <tr>
+        <th>ticket_id</th>
+        <th>quantity</th>
+        <th>price</th>
+        <th>payment date</th>
+        {% if type %}
+        <th>type</th>
+        {% endif %}
+        <th>delete ticket and payment</th>
+    </tr>
+    {% if rows %}
+    {% for row in rows%}
+    <tr>
+        <td>{{row['id']}}</td>
+        <td>{{row['quantity']}}</td>
+        <td>{{row['price']}}</td>
+        <td>{{row['date']}}</td>
+        {% if type %}
+        <td>{{row['type']}}</td>
+        {% endif %}
+        <td>
+            <a href="{{ url_for('delete',**{'table':'tickets','rv':row['id']})}}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+        <td><h3>Empty Table</h3></td>
+    </tr>
+    {% endif %}
+
+</table>
+
+<form method="post" action="#">
+    <fieldset>
+        <legend><h3>Search payments by date</h3></legend>
+        <label>date -from
+            <input name="date_from" type="date"/>
+        </label>
+        <label>date -to
+            <input name="date_to" type="date"/>
+        </label>
+        <button type="submit" name="submit">Search</button>
+    </fieldset>
+</form>
+
+<form method="post" action="#">
+    <fieldset>
+        <legend><h3>Search payments by date</h3></legend>
+        <label>date
+            <input name="date" type="date"/>
+        </label>
+        <button type="submit" name="submit">Search</button>
+    </fieldset>
+</form>
+
+
+{% endblock %}

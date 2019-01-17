@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{% block content %}
+<a href="{{url_for('index')}}">Main Site</a><br>
+{% if error %}
+<h3>{{error}}</h3>
+{% endif %}
+<div>
+    <h3>Order (add new) Ticket</h3>
+    <form method="post" action="#">
+        <label>Quantity
+        <input name="quantity" type="number"/>
+        <label>Price
+        <input name="price" type="number" step="0.01"/>
+        </label>
+        <label>Show
+            <select name="show">
+           {% for s in shows %}
+           <option value="{{s['id']}}">Id:{{s['id']}}- Movie:{{s['m_name']}}- Cinema:{{s['c_name']}}</option>
+           {% endfor %}
+       </select>
+        </label>
+        <button type="submit" name="submit" value="tickets">Add</button>
+    </form>
+</div>
+{% endblock %}

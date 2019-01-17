@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Database Homework day 2 </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Database Homework Day 2</h1>
+        <p>Database exercise with 5 tables: Movies, Cinemas, Tickets, Payments and Shows</p>
+    </div>
+
+    {% block content %}
+    {% if create %}
+    <h3>Error! Create database first!</h3>
+    {% endif %}
+
+    <div class="container-fluid">
+        <div class="well">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3>Stworz Baze Danych i tabele</h3>
+                    <form action="#" method="post">
+                        <label>
+                            <button type="submit">Create/Clean DB</button>
+                        </label>
+                    </form>
+
+                </div>
+                <div class="col-sm-6">
+                    <h3>Zarzadzaj Tabelami:</h3>
+                    <form action="/modify" method="get">
+                        <label>
+                            <select name="tabela">
+                                <option value="cinemas">cinemas</option>
+                                <option value="movies">movies</option>
+                                <option value="tickets">tickets</option>
+                                <option value="payments">payments</option>
+                                <option value="shows">shows</option>
+                            </select>
+                        </label>
+                        <label>
+                            <button type="submit">
+                                Send
+                            </button>
+                        </label>
+                    </form>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="well">
+            <h3> Info:</h3>
+            <p>DB Info:</p>
+            <ul>
+                <li>db_name = "homework_d2"</li>
+                <li>username = "postgres"</li>
+                <li>passwd = "coderslab"</li>
+                <li>hostname = "localhost"</li>
+            </ul>
+            <p>DB contains 5 tables: Cinemas, Movies, Tickets, Payments and Shows</p>
+        </div>
+        <div class="well"><a href="/modify?tabela=movies"><h3>Pokaz Filmy</h3></a></div>
+        <div class="well"><a href="/modify?tabela=cinemas"><h3>Pokaz Kina</h3></a></div>
+        <div class="well"><a href="{{url_for('new',table='tickets')}}"><h3>Zamow Bilet</h3></a></div>
+        <div class="well"><a href="{{url_for('modify', tabela='tickets')}}"><h3>Zarzadzaj Biletami</h3></a></div>
+        <div class="well"><a href="{{url_for('pm_details')}}"><h3>Zarzadzaj Platnosciami</h3></a></div>
+
+        {% endblock %}
+
+    </div>
+
+</body>
+</html>

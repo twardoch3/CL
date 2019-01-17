@@ -1,0 +1,265 @@
+{% extends "index.html" %}
+{% block content %}
+<a href="{{url_for('index')}}">Main Site</a><br>
+<a href="{{url_for('modify',tabela='cinemas')}}">Cinemas </a>
+<a href="{{url_for('modify',tabela='movies')}}"> Movies </a>
+<a href="{{url_for('modify',tabela='tickets')}}"> Tickets </a>
+<a href="{{url_for('modify',tabela='payments')}}"> Payments </a>
+<a href="{{url_for('modify',tabela='shows')}}"> Shows </a><br>
+
+
+
+{% if db == 'dbready' %}
+<h3>Database created!</h3>
+<h3>New movie and cinema should be added first.Then add Show and Ticket!(because of table relations)</h3>
+<a href="{{url_for('new',table='cinemas')}}"> Add new Cinema</a><br>
+<a href="{{url_for('new',table='movies')}}"> Add new Movie</a><br>
+<a href="{{url_for('new',table='tickets')}}"> Add new Ticket</a><br>
+<a href="{{url_for('new',table='payments')}}"> Add new Payment</a><br>
+<a href="{{url_for('new',table='shows')}}"> Add new Show</a><br>
+{% endif %}
+
+{% if createDB %}
+<h3>Create database first!</h3>
+{% endif %}
+
+{% if button %}
+<h3>Data added successfully to table {{button}}</h3>
+<a href="{{url_for('new',table='cinemas')}}"> Add new Cinema</a><br>
+<a href="{{url_for('new',table='movies')}}"> Add new Movie</a><br>
+<a href="{{url_for('new',table='tickets')}}"> Add new Ticket</a><br>
+<a href="{{url_for('new',table='payments')}}"> Add new Payment</a><br>
+<a href="{{url_for('new',table='shows')}}"> Add new Show</a><br>
+{% endif %}
+
+{% if del_row %}
+<h3>{{del_row}} </h3>
+<div>
+    <h3>Tables:</h3>
+    <form action="/modify" method="get">
+        <label>
+            <p>Wybierz tabele:</p>
+            <select name="tabela">
+                <option value="cinemas">cinemas</option>
+                <option value="movies">movies</option>
+                <option value="tickets">tickets</option>
+                <option value="payments">payments</option>
+                <option value="shows">shows</option>
+            </select>
+        </label>
+        <label>
+            <button type="submit">
+                Send
+            </button>
+        </label>
+    </form>
+
+</div>
+{% endif %}
+
+
+{% if t == 'cinemas' %}
+<h3>{{x}}</h3>
+<a href="{{url_for('new',table='cinemas')}}"> Add new Cinema</a>
+<h3> Table {{t}}</h3>
+<table border=1>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>address</th>
+        <th>capacity</th>
+        <th>played movies(shows)</th>
+        <th>delete</th>
+    </tr>
+    {% if rows %}
+    {% for row in rows%}
+    <tr>
+        <td>{{row['id']}}</td>
+        <td>{{row['name']}}</td>
+        <td>{{row['address']}}</td>
+        <td>{{row['capacity']}}</td>
+        <td>{{row['movies']}}</td>
+        <td>
+            <a href="{{ url_for('delete',**{'table':t,'rv':row['id']})}}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+        <td><h3>Empty Table</h3></td>
+    </tr>
+    {% endif %}
+</table>
+
+{% endif %}
+
+{% if t == 'movies' %}
+<h3>{{x}}</h3>
+<a href="{{url_for('new',table='movies')}}"> Add new Movie</a>
+<h3> Table {{t}}</h3>
+<table border=1>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>description</th>
+        <th>rating</th>
+        <th>cinemas showing movie</th>
+        <th>delete</th>
+    </tr>
+    {% if rows %}
+    {% for row in rows%}
+    <tr>
+        <td>{{row['id']}}</td>
+        <td>{{row['name']}}</td>
+        <td>{{row['description']}}</td>
+        <td>{{row['rating']}}</td>
+        <td>{{row['cinemas']}}</td>
+        <td>
+            <a href="{{ url_for('delete',**{'table':t,'rv':row['id']})}}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+        <td><h3>Empty Table</h3></td>
+    </tr>
+    {% endif %}
+</table>
+{% endif %}
+
+
+{% if t == 'tickets' %}
+<h3>{{x}}</h3>
+<a href="{{url_for('new',table='tickets')}}"> Add new Ticket</a>
+
+<h3>Paid Tickets</h3>
+<table border=1>
+    <tr>
+        <th>id</th>
+        <th>quantity</th>
+        <th>price</th>
+        <th>show</th>
+        <th>payment details</th>
+        <th>delete</th>
+    </tr>
+    {% if rows_1 %}
+    {% for row in rows_1 %}
+    <tr>
+        <td>{{row['id']}}</td>
+        <td>{{row['quantity']}}</td>
+        <td>{{row['price']}}</td>
+        <td>{{row['show']}}</td>
+        <td>
+            <a href="{{ url_for('payment_one',**{'id': row['id']})}}">Payment</a>
+        </td>
+
+        <td>
+            <a href="{{ url_for('delete',**{'table':t,'rv':row['id']})}}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+        <td><h3>Empty Table</h3></td>
+    </tr>
+    {% endif %}
+</table>
+
+<h3>Unpaid Tickets</h3>
+<table border=1>
+    <tr>
+        <th>id</th>
+        <th>quantity</th>
+        <th>price</th>
+        <th>show</th>
+        <th>PAY</th>
+        <th>delete</th>
+    </tr>
+    {% if rows_2 %}
+    {% for row in rows_2 %}
+    <tr>
+        <td>{{row['id']}}</td>
+        <td>{{row['quantity']}}</td>
+        <td>{{row['price']}}</td>
+        <td>{{row['show']}}</td>
+        <td>
+            <a href="{{ url_for('pay_ticket',**{'id': row['id']})}}">pay</a>
+        </td>
+
+        <td>
+            <a href="{{ url_for('delete',**{'table':t,'rv':row['id']})}}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+        <td><h3>Empty Table</h3></td>
+    </tr>
+    {% endif %}
+</table>
+
+{% endif %}
+
+{% if t == 'payments' %}
+<h3>{{x}}</h3>
+<a href="{{url_for('new',table='payments')}}"> Add new Payment</a>
+<a href="{{url_for('pm_details')}}"> Payments Details</a>
+<h3> Table {{t}}</h3>
+<table border=1>
+    <tr>
+        <th>ticket_id</th>
+        <th>type</th>
+        <th>date</th>
+        <th>delete</th>
+    </tr>
+    {% if rows %}
+    {% for row in rows%}
+    <tr>
+        <td>{{row['ticket_id']}}</td>
+        <td>{{row['type']}}</td>
+        <td>{{row['date']}}</td>
+        <td>
+            <a href="{{ url_for('delete',**{'table':t,'rv':row['ticket_id']})}}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+        <td><h3>Empty Table</h3></td>
+    </tr>
+    {% endif %}
+</table>
+{% endif %}
+
+
+{% if t == 'shows' %}
+<br><br>
+<a href="{{url_for('new',table='shows')}}"> Add new Show</a>
+<h3> Table {{t}}</h3>
+<table border=1>
+    <tr>
+        <th>id</th>
+        <th>movie</th>
+        <th>cinema</th>
+        <th>delete</th>
+    </tr>
+    {% if rows %}
+    {% for row in rows%}
+    <tr>
+        <td>{{row['id']}}</td>
+        <td>{{row['m_name']}}</td>
+        <td>{{row['c_name']}}</td>
+        <td>
+            <a href="{{ url_for('delete',**{'table':t,'rv':row['id']})}}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+        <td><h3>Empty Table</h3></td>
+    </tr>
+    {% endif %}
+</table>
+{% endif %}
+
+{% endblock %}

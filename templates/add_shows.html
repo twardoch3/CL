@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+{% block content %}
+<a href="{{url_for('index')}}">Main Site</a><br>
+{% if error %}
+<h3>{{error}}</h3>
+{% endif %}
+<div>
+    <h3>Add New Show</h3>
+    <form method="post" action="#">
+        <label>Select Movie
+       <select name="movie">
+           {% for m in movies %}
+           <option value="{{m['id']}}">id:{{m['id']}}- {{m['name']}}</option>
+           {% endfor %}
+       </select>
+        </label>
+        <label>Select Cinema
+       <select name="cinema">
+           {% for c in cinemas %}
+           <option value="{{c['id']}}">id:{{c['id']}}- {{c['name']}}</option>
+           {% endfor %}
+       </select>
+        </label>
+        <button type="submit" name="submit" value="shows">Add</button>
+    </form>
+</div>
+
+{% endblock %}

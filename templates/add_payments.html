@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+{% block content %}
+<a href="{{url_for('index')}}">Main Site</a><br>
+{% if error %}
+<h3>{{error}}</h3>
+{% endif %}
+<div>
+    <h3>Pay for Ticket (Add New Payment)</h3>
+    <form method="post" action="#">
+        <label>Ticket_id
+            <select name="ticket">
+                {% for t in tickets %}
+                <option value="{{t['id']}}">ticket_id: {{t['id']}}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>Type
+            <select name="type">
+                <option value="cash">cash</option>
+                <option value="card">card</option>
+                <option value="transfer">transfer</option>
+            </select>
+        </label>
+        <label>Date
+            <input name="date" type="date"/>
+        </label>
+        <button type="submit" name="submit" value="payments">Add</button>
+    </form>
+</div>
+<a href="{{url_for('modify', tabela='tickets')}}"><h3>Pay for ticket later</h3></a><br>
+{% endblock %}
