@@ -21,7 +21,7 @@ Create database clicking on button 'Create/Clean DB'.
 ### Usage Examples:
 Add movie:
 ```
-http://127.0.0.1:5000/new/tickets
+http://127.0.0.1:5000/new/movies
 ```
 Manage tickets:
 ```
