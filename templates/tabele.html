@@ -17,6 +17,8 @@
 <a href="{{url_for('new',table='tickets')}}"> Add new Ticket</a><br>
 <a href="{{url_for('new',table='payments')}}"> Add new Payment</a><br>
 <a href="{{url_for('new',table='shows')}}"> Add new Show</a><br>
+{% elif db == 'removed' %}
+<h3>Database removed!</h3>
 {% endif %}
 
 {% if createDB %}

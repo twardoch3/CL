@@ -14,7 +14,7 @@
 <body>
 <div class="container">
     <div class="jumbotron">
-        <h1>Database Homework Day 2</h1>
+        <h1>Database Cinema App</h1>
         <p>Database exercise with 5 tables: Movies, Cinemas, Tickets, Payments and Shows</p>
     </div>
 
@@ -26,15 +26,26 @@
     <div class="container-fluid">
         <div class="well">
             <div class="row">
+                {% if no_db %}
                 <div class="col-sm-6">
                     <h3>Stworz Baze Danych i tabele</h3>
                     <form action="#" method="post">
                         <label>
-                            <button type="submit">Create/Clean DB</button>
+                            <button type="submit" name="db" value="create">Create DB</button>
                         </label>
                     </form>
-
                 </div>
+                {% else %}
+                <div class="col-sm-6">
+                    <h3>Usun Baze Danych i tabele</h3>
+                    <form action="#" method="post">
+                        <label>
+                            <button type="submit" name="db" value="remove">Remove DB</button>
+                        </label>
+                    </form>
+                </div>
+                {% endif %}
+
                 <div class="col-sm-6">
                     <h3>Zarzadzaj Tabelami:</h3>
                     <form action="/modify" method="get">

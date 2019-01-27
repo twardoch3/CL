@@ -9,16 +9,28 @@ app = Flask(__name__)
 def index():
     if request.method == 'POST':
         homeworkd1 = createDB()
-        homeworkd1.clean()
-        homeworkd1.run()
-        tables = DB()
-        tables.create_tables()
+        if request.form['db'] == 'create':
+            homeworkd1.run()
+            tables = DB()
+            tables.create_tables()
+            db = 'dbready'
+        else:
+            homeworkd1.clean()
+            db = 'removed'
 
-        db = 'dbready'
         return render_template("tabele.html", db=db)
 
     else:
-        return render_template("index.html")
+        no_db = None
+        o1 = DB()
+        try:
+            o1.connect()
+            print('Ok')
+        except Exception:
+            print("DB doesn't exits")
+            no_db = True
+
+        return render_template("index.html", no_db=no_db)
 
 
 @app.route('/modify', methods=['GET', 'POST'])
