@@ -23,7 +23,7 @@ Start a development Web server on the local machine with command:
 ```
 python3 homework_day2_flask.py
 ```
-Create database clicking on button 'Create/Clean DB'.
+Create database clicking on button 'Create DB'.
 
 
 
