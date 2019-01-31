@@ -11,11 +11,20 @@ pip install -r requirements.txt
 ```
 
 ### Running the program
+Connection info (homework_day2_fn_cl.py):
+```
+class DB:
+    username = "postgres"
+    passwd = "coderslab"
+    hostname = "localhost"
+    db_name = "homework_d2" 
+```
 Start a development Web server on the local machine with command:
 ```
 python3 homework_day2_flask.py
 ```
 Create database clicking on button 'Create/Clean DB'.
+
 
 
 ### Usage Examples:
