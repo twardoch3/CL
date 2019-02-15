@@ -1,6 +1,8 @@
 # Cinema-App
 Application allows to manage database in cinema (add, edit or delete movies, cinemas, tickets, payments).
 
+[Deployed version](https://peaceful-basin-17183.herokuapp.com/)
+
 ### Requirements
 Program requires PostgreSQL database and Python Flask.
 
